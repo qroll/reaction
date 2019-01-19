@@ -6,10 +6,12 @@ import { GRAY, WHITE, ACCENT } from "src/styles";
 export const StyledNavBar = styled.nav`
   background-color: ${WHITE};
   border: 1px solid ${GRAY.LIGHTER};
-  border-bottom: 3px solid ${GRAY.LIGHTER};
+  border-left: 3px solid ${GRAY.LIGHTER};
   display: flex;
-  flex: 0 0 auto;
-  margin: 10px auto;
+  flex: 1 1 0;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 10px;
 `;
 
 export const StyledLink = styled(Link)`
@@ -19,8 +21,8 @@ export const StyledLink = styled(Link)`
   padding: 10px 10px 7px 10px;
 
   &:hover {
-    border-bottom: 3px solid ${ACCENT.PRIMARY_MUTED};
-    margin-bottom: -3px;
+    border-left: 3px solid ${ACCENT.PRIMARY_MUTED};
+    margin-left: -3px;
   }
 
   &:active {

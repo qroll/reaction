@@ -7,7 +7,8 @@ class NavBar extends React.Component {
     return (
       <StyledNavBar>
         <StyledLink to="/">Home</StyledLink>
-        <StyledLink to="/form">Form</StyledLink>
+        <StyledLink to="/order">Props</StyledLink>
+        <StyledLink to="/booking">Context (Single)</StyledLink>
       </StyledNavBar>
     );
   }

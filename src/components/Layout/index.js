@@ -5,8 +5,12 @@ import NavBar from "./NavBar";
 
 const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  align-items: flex-start;
+`;
+
+const Content = styled.div`
+  flex: 3;
 `;
 
 class Layout extends React.Component {
@@ -14,7 +18,7 @@ class Layout extends React.Component {
     return (
       <Wrapper className="app">
         <NavBar />
-        {this.props.children}
+        <Content>{this.props.children}</Content>
       </Wrapper>
     );
   }
