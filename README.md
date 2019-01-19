@@ -1,6 +1,6 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-A playground for React, other useful libraries and various techniques.
+A playground for React, other useful libraries, various techniques and disorganized rambling.
 
 ### A scrim for scrollable elements
 
@@ -16,8 +16,27 @@ I throttled the scrim display logic for "performance", but didn't actually bothe
 
 A window-level scroll listener will need to be registered in `ComponentDidMount` and you have to remember to clean it up in `ComponentWillUnmount`. With React Hooks, this can be further simplified with `useEffect`.
 
-### Dealing with nested state
+### Dealing with state
 
 I still love this article about [Twitter's Redux store](https://medium.com/statuscode/dissecting-twitters-redux-store-d7280b62c6b1) a lot.
 
 [Normalizr](https://github.com/paularmstrong/normalizr) is great for normalizing nested data.
+
+... Storing data in local state vs redux still keeps me up at night.
+
+#### Forms in particular are still a pain
+State shape?
+
+```
+form: { values: { [field] : [value] }, errors: { [field] : [error] }, topLevelError: { [error] } }
+```
+
+```
+form: { [field]: { value : [value], error: [error] }, $topLevelError: { [error] } }
+```
+Lifting state?
+1. Storing form state and actions in Redux
+2. Storing local form state and actions, passing them down as props
+3. Storing form state and actions locally, passing them via Context
+
+Approach 2 is used in `src/pages/OrderForm`. A handler blindly swaps out the field value, and passes the responsibility of formatting that value to the child component. Works fine for objects, with a slight caveat of having to be aware of the field shape (see `src/pages/OrderForm/Sides.js`). This means form fields can only read and write their own fields though...
