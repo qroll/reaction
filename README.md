@@ -1,68 +1,23 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+A playground for React, other useful libraries and various techniques.
 
-In the project directory, you can run:
+### A scrim for scrollable elements
 
-### `npm start`
+`src/pages/OrderForm/Sides.js`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Makes use of the fancy `position: sticky;` property to display fading edges at the top and bottom. This helps to indicate the scroll affordance of a element that overflows vertically. When the user scrolls to the very start or end of the element, the gradient should disappear.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+ℹ️ Throttling
 
-### `npm test`
+I throttled the scrim display logic for "performance", but didn't actually bother comparing it. Maybe the throttling computation would take more effort than just firing a bunch of `setState`s continuously, since React batches `setState` anyway?
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+ℹ️ Scroll listener
 
-### `npm run build`
+A window-level scroll listener will need to be registered in `ComponentDidMount` and you have to remember to clean it up in `ComponentWillUnmount`. With React Hooks, this can be further simplified with `useEffect`.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Dealing with nested state
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+I still love this article about [Twitter's Redux store](https://medium.com/statuscode/dissecting-twitters-redux-store-d7280b62c6b1) a lot.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+[Normalizr](https://github.com/paularmstrong/normalizr) is great for normalizing nested data.
