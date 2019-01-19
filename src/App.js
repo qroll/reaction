@@ -7,6 +7,7 @@ import configureStore from "src/store";
 import Layout from "src/components/Layout";
 import Main from "src/pages/Main";
 import OrderForm from "src/pages/OrderForm";
+import BookingForm from "src/pages/BookingForm";
 
 let store = configureStore();
 
@@ -17,7 +18,8 @@ class App extends Component {
         <Provider store={store}>
           <Layout>
             <Route path="/" exact component={Main} />
-            <Route path="/form" component={OrderForm} />
+            <Route path="/order" component={OrderForm} />
+            <Route path="/booking" component={BookingForm} />
           </Layout>
         </Provider>
       </BrowserRouter>

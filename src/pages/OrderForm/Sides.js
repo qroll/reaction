@@ -38,7 +38,8 @@ class Sides extends React.Component {
     let nextValue = setIn(this.props.value, [undefined], {
       id: shortid.generate(),
       option: "",
-      size: "S"
+      size: "S",
+      comments: ""
     });
     this.props.onChange(this.props.field, nextValue);
   };

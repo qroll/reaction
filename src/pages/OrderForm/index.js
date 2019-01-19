@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { setIn } from "immutable-setter";
 import styled from "styled-components";
 
-import { Page } from "src/components/Container";
+import { Page, Code } from "src/components/Container";
 import FormButton from "src/components/Form/FormButton";
 import FormInput from "src/components/Form/FormInput";
 import Sides from "./Sides";
@@ -45,6 +45,7 @@ class OrderForm extends Component {
           />
           <FormButton label="Order" />
         </Form>
+        <Code>{JSON.stringify(this.state, null, 2)}</Code>
       </Page>
     );
   }
