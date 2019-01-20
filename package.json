@@ -28,7 +28,9 @@
     "test:nightwatch:setup": "node nightwatch/server.js",
     "test:nightwatch:run": "cucumber-js --require nightwatch/setup.js --require nightwatch/step_definitions --format node_modules/cucumber-pretty nightwatch",
     "test:cypress": "cypress run",
-    "test:cypress:interactive": "cypress open"
+    "test:cypress:interactive": "cypress open",
+    "test:testcafe": "gherkin-testcafe --steps testcafe/**/*.js --specs testcafe/**/*.feature --browsers chrome",
+    "test:codecept": "codeceptjs run --steps"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -41,11 +43,16 @@
   ],
   "devDependencies": {
     "chromedriver": "^2.45.0",
+    "codeceptjs": "^2.0.3",
     "cucumber-pretty": "^1.5.0",
     "cypress": "^3.1.4",
     "cypress-cucumber-preprocessor": "^1.9.1",
+    "gherkin-testcafe": "^1.5.0",
     "nightwatch": "^1.0.18",
     "nightwatch-api": "^2.1.0",
-    "start-server-and-test": "^1.7.11"
+    "puppeteer": "^1.11.0",
+    "selenium-standalone": "^6.15.4",
+    "start-server-and-test": "^1.7.11",
+    "testcafe": "^0.23.3"
   }
 }
