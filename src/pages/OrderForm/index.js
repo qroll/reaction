@@ -11,7 +11,6 @@ const Form = styled.div`
   display: flex;
   flex-direction: column;
   margin: auto;
-  max-width: 720px;
 `;
 
 class OrderForm extends Component {
@@ -31,7 +30,7 @@ class OrderForm extends Component {
     let { form } = this.state;
 
     return (
-      <Page>
+      <Page style={{ maxWidth: 720, margin: "auto" }}>
         <Form>
           <FormInput
             field="appetizer"

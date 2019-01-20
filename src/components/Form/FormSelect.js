@@ -40,12 +40,6 @@ class Select extends React.Component {
     isFocused: false
   };
 
-  handleInputChange = (field, value) => {
-    if (this.props.onChange) {
-      this.props.onChange(field, value);
-    }
-  };
-
   handleOnSelect = (field, value) => e => {
     if (this.props.onChange) {
       this.props.onChange(field, value);
@@ -73,9 +67,9 @@ class Select extends React.Component {
               : value
           }
           placeholder={placeholder}
-          onChange={this.handleInputChange}
           onFocus={() => this.setState({ isFocused: true })}
           onBlur={() => this.setState({ isFocused: false })}
+          readOnly
         />
         {isFocused && (
           <Dropdown>

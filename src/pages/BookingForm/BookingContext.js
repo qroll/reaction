@@ -1,5 +1,7 @@
 import React from "react";
 
+import { FORM_STATUS } from "src/actions/form";
+
 const defaultValue = {
   values: {
     reason: "",
@@ -11,15 +13,10 @@ const defaultValue = {
       date: "",
       time: ""
     }
-  }
+  },
+  status: FORM_STATUS.UNPOSTED,
+  errors: {}
 };
-
-// const shape = {
-//   reason: { value: "", error: false,  },
-//   startTime: { value: "", error: false },
-//   endTime: { value: "", error: false },
-//   $topLevelError: false
-// };
 
 export const initialState = defaultValue;
 
