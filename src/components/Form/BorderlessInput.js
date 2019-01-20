@@ -17,15 +17,25 @@ class TextInput extends React.Component {
   };
 
   render() {
-    let { field, value, placeholder, readOnly, onFocus, onBlur } = this.props;
+    let {
+      field,
+      value,
+      placeholder,
+      readOnly,
+      onFocus,
+      onBlur,
+      disabled
+    } = this.props;
+
     return (
       <StyledInput
         type="text"
-        id={`textfield-${field}`}
+        id={`textfield-${Array.isArray(field) ? field.join("-") : field}`}
         value={value}
         placeholder={placeholder}
         onChange={this.handleInputChange}
         readOnly={readOnly}
+        disabled={disabled}
         onFocus={onFocus}
         onBlur={onBlur}
       />

@@ -20,18 +20,21 @@ const Error = styled(NotificationWrapper)`
   background-color: #de4a43;
 `;
 
-const Notification = props => (
-  <BookingContext.Consumer>
-    {ctx => {
-      if (ctx.form.status === FORM_STATUS.POSTED) {
-        return <Success>Hoorah!</Success>;
-      }
-      if (ctx.form.status === FORM_STATUS.ERROR) {
-        return <Error>Boo!</Error>;
-      }
-      return null;
-    }}
-  </BookingContext.Consumer>
-);
+const Notification = props => {
+  const { id } = props;
+  return (
+    <BookingContext.Consumer>
+      {ctx => {
+        if (ctx.form.status === FORM_STATUS.POSTED) {
+          return <Success className={`notif-success-${id}`}>Hoorah!</Success>;
+        }
+        if (ctx.form.status === FORM_STATUS.ERROR) {
+          return <Error className={`notif-error-${id}`}>Boo!</Error>;
+        }
+        return null;
+      }}
+    </BookingContext.Consumer>
+  );
+};
 
 export default Notification;

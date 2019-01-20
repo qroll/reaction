@@ -20,13 +20,18 @@ const Button = styled.button`
 `;
 
 const FormButton = props => {
-  let { label, onClick } = props;
-  return <Button onClick={onClick}>{label}</Button>;
+  let { label, onClick, id } = props;
+  return (
+    <Button id={`button-${id}`} onClick={onClick}>
+      {label}
+    </Button>
+  );
 };
 
 FormButton.propTypes = {
   label: PropTypes.string.isRequired,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
+  id: PropTypes.string
 };
 
 FormButton.defaultProps = {

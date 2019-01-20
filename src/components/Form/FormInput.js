@@ -31,10 +31,11 @@ class TextInput extends React.Component {
 
   render() {
     let { field, value, placeholder, readOnly } = this.props;
+
     return (
       <StyledInput
         type="text"
-        id={`textfield-${field}`}
+        id={`textfield-${Array.isArray(field) ? field.join("-") : field}`}
         value={value}
         placeholder={placeholder}
         onChange={this.handleInputChange}

@@ -40,11 +40,16 @@ class Select extends React.Component {
     isFocused: false
   };
 
+  handleInputChange = (field, value) => {
+    if (this.props.onChange) {
+      this.props.onChange(field, value);
+    }
+  };
+
   handleOnSelect = (field, value) => e => {
     if (this.props.onChange) {
       this.props.onChange(field, value);
     }
-    this.setState({ isFocused: false });
   };
 
   render() {
@@ -57,15 +62,10 @@ class Select extends React.Component {
       !Array.isArray(options[0]);
 
     return (
-      <InputWrapper
-        id={`select-${Array.isArray(field) ? field.join("-") : field}`}
-        tabIndex="0"
-        onFocus={() => this.setState({ isFocused: true })}
-        onBlur={() => this.setState({ isFocused: false })}
-      >
+      <InputWrapper>
         <BorderlessInput
           type="text"
-          field={field}
+          id={`textfield-${field}`}
           value={
             isObject
               ? (options.find(option => option.value === value) || {}).label ||
@@ -73,10 +73,9 @@ class Select extends React.Component {
               : value
           }
           placeholder={placeholder}
+          onChange={this.handleInputChange}
           onFocus={() => this.setState({ isFocused: true })}
           onBlur={() => this.setState({ isFocused: false })}
-          readOnly
-          disabled
         />
         {isFocused && (
           <Dropdown>
@@ -87,7 +86,6 @@ class Select extends React.Component {
                 <DropdownItem
                   onMouseDown={this.handleOnSelect(field, option.value)}
                   key={option.value}
-                  className="dropdown-item"
                 >
                   {option.label}
                 </DropdownItem>
@@ -95,7 +93,6 @@ class Select extends React.Component {
                 <DropdownItem
                   onMouseDown={this.handleOnSelect(field, option)}
                   key={option}
-                  className="dropdown-item"
                 >
                   {option}
                 </DropdownItem>

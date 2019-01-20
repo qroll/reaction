@@ -5,10 +5,16 @@ import { StyledNavBar, StyledLink } from "./NavBar.styles";
 class NavBar extends React.Component {
   render() {
     return (
-      <StyledNavBar>
-        <StyledLink to="/">Home</StyledLink>
-        <StyledLink to="/order">Props</StyledLink>
-        <StyledLink to="/booking">Context (Single)</StyledLink>
+      <StyledNavBar id="navbar">
+        <StyledLink to="/" id="home">
+          Home
+        </StyledLink>
+        <StyledLink to="/order" id="order">
+          Props
+        </StyledLink>
+        <StyledLink to="/booking" id="booking">
+          Context (Single)
+        </StyledLink>
       </StyledNavBar>
     );
   }
