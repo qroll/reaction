@@ -26,7 +26,9 @@
     "eject": "react-scripts eject",
     "test:nightwatch": "start-server-and-test test:nightwatch:setup http-get://localhost:4444/status test:nightwatch:run",
     "test:nightwatch:setup": "node nightwatch/server.js",
-    "test:nightwatch:run": "cucumber-js --require nightwatch/setup.js --require nightwatch/step_definitions --format node_modules/cucumber-pretty nightwatch"
+    "test:nightwatch:run": "cucumber-js --require nightwatch/setup.js --require nightwatch/step_definitions --format node_modules/cucumber-pretty nightwatch",
+    "test:cypress": "cypress run",
+    "test:cypress:interactive": "cypress open"
   },
   "eslintConfig": {
     "extends": "react-app"
