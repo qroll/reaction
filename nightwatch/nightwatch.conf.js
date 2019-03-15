@@ -1,6 +1,7 @@
 const chromedriver = require("chromedriver");
 
 module.exports = {
+  custom_commands_path: ["./nightwatch/custom_commands"],
   test_settings: {
     default: {
       launch_url: "http://localhost:3000",
