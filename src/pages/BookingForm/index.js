@@ -70,6 +70,7 @@ class BookingForm extends Component {
           <Form>
             <Notification id="book" />
             <Input field="reason" />
+            <Input field="cupcake" />
             <DateTime field={["startTime"]} />
             <DateTime field={["endTime"]} />
             <FormButton id="book" label="Book" onClick={this.handleOnSubmit} />

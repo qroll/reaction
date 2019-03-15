@@ -5,6 +5,7 @@ import { FORM_STATUS } from "src/actions/form";
 const defaultValue = {
   values: {
     reason: "",
+    cupcake: "Whatever",
     startTime: {
       date: "",
       time: ""

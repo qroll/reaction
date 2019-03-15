@@ -7,8 +7,14 @@ Given(/^I am on the booking page$/, async () => {
   await client.click("#booking").pause(1000);
 });
 
+When(/^I pause for (\d+) ms$/, async time => {
+  await client.pause(parseInt(time, 10));
+});
+
 When(/^I enter the reason$/, async () => {
-  await client.setValue("#textfield-reason", "Meeting").pause(1000);
+  let value;
+  await client.getValue("#textfield-cupcake", result => (value = result.value));
+  await client.setValue("#textfield-reason", value).pause(1000);
 });
 
 When(/^I enter the start time$/, async () => {
@@ -24,19 +30,20 @@ When(/^I enter the start time$/, async () => {
 });
 
 When(/^I enter the end time$/, async () => {
-  await client.click("#select-endTime-date").pause(500);
+  await client.click("#select-endTime-date").pause(1000);
   await client
     .click("#select-endTime-date .dropdown-item:nth-child(2)")
     .pause(500);
 
-  await client.click("#select-endTime-time").pause(500);
+  await client.click("#select-endTime-time").pause(1000);
   await client
     .click("#select-endTime-time .dropdown-item:nth-child(3)")
     .pause(500);
 });
 
 When(/^I submit the booking$/, async () => {
-  await client.click("#button-book").pause(3000);
+  // await client.click("#button-book").pause(3000);
+  await client.clickByText("button", "Book");
 });
 
 Then(/^I should successfully create a booking$/, async () => {

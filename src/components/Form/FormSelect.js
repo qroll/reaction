@@ -47,6 +47,20 @@ class Select extends React.Component {
     this.setState({ isFocused: false });
   };
 
+  handleOnFocus = () => {
+    this.setState({ isFocused: true });
+  };
+
+  handleOnBlur = () => {
+    if (this.ref && document.activeElement.id === this.ref.id) {
+      // do nothing
+      this.setState({ isFocused: false });
+    } else {
+      console.log(">>>blur");
+      this.setState({ isFocused: false });
+    }
+  };
+
   render() {
     let { field, value, placeholder, options, renderDropdownItem } = this.props;
     let { isFocused } = this.state;
@@ -60,8 +74,9 @@ class Select extends React.Component {
       <InputWrapper
         id={`select-${Array.isArray(field) ? field.join("-") : field}`}
         tabIndex="0"
-        onFocus={() => this.setState({ isFocused: true })}
-        onBlur={() => this.setState({ isFocused: false })}
+        onFocus={this.handleOnFocus}
+        onBlur={this.handleOnBlur}
+        ref={ref => (this.ref = ref)}
       >
         <BorderlessInput
           type="text"
@@ -73,8 +88,8 @@ class Select extends React.Component {
               : value
           }
           placeholder={placeholder}
-          onFocus={() => this.setState({ isFocused: true })}
-          onBlur={() => this.setState({ isFocused: false })}
+          onFocus={this.handleOnFocus}
+          onBlur={this.handleOnBlur}
           readOnly
           disabled
         />

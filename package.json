@@ -26,7 +26,7 @@
     "eject": "react-scripts eject",
     "test:nightwatch": "start-server-and-test test:nightwatch:setup http-get://localhost:4444/status test:nightwatch:run",
     "test:nightwatch:setup": "node nightwatch/server.js",
-    "test:nightwatch:run": "cucumber-js --require nightwatch/setup.js --require nightwatch/step_definitions --format node_modules/cucumber-pretty nightwatch",
+    "test:nightwatch:run": "cucumber-js --parallel 2 --require nightwatch/setup.js --require nightwatch/step_definitions --format node_modules/cucumber-pretty nightwatch",
     "test:cypress": "cypress run",
     "test:cypress:interactive": "cypress open",
     "test:testcafe": "gherkin-testcafe --steps testcafe/**/*.js --specs testcafe/**/*.feature --browsers chrome",
@@ -44,6 +44,7 @@
   "devDependencies": {
     "chromedriver": "^2.45.0",
     "codeceptjs": "^2.0.3",
+    "cucumber": "^5.1.0",
     "cucumber-pretty": "^1.5.0",
     "cypress": "^3.1.4",
     "cypress-cucumber-preprocessor": "^1.9.1",
