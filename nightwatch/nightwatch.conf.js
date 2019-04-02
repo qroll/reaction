@@ -1,6 +1,7 @@
 const chromedriver = require("chromedriver");
 
 module.exports = {
+  globals_path: "../nightwatch/global.js",
   custom_commands_path: ["./nightwatch/custom_commands"],
   test_settings: {
     default: {

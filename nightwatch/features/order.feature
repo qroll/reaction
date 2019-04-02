@@ -4,15 +4,13 @@
 Feature: Order
 
   @make_order
-  Scenario: Create a booking
-    Given I am on the booking page
-    When I enter the reason
-    And I enter the start time
-    And I enter the end time
-    And I submit the booking
-    Then I should successfully create a booking
+  Scenario: Make an order
+    Given I am on the order page
+    When I enter the appetizer
+    And I pause for 1 ms
+    And I submit the order
 
-  Scenario: Create a booking 2
-    Given I am on the booking page
-    When I enter the reason
-    And I submit the booking
+  Scenario: Make a bad order
+    Given I am on the order page
+    When I add a side
+    And I submit the order

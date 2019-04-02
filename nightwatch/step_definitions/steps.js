@@ -2,9 +2,27 @@ const { client } = require("nightwatch-api");
 const { Given, When, Then } = require("cucumber");
 
 Given(/^I am on the booking page$/, async () => {
+  console.log(client.globals.state.sessionId);
+  await client.session(res => {
+    console.log(res.sessionId);
+    client.globals.state.sessionId = res.sessionId;
+  });
+
   await client.url(client.launch_url);
   await client.waitForElementVisible(".app", 3000);
   await client.click("#booking").pause(1000);
+});
+
+Given(/^I am on the order page$/, async () => {
+  console.log(client.globals.state.sessionId);
+  await client.session(res => {
+    console.log(res.sessionId);
+    client.globals.state.sessionId = res.sessionId;
+  });
+
+  await client.url(client.launch_url);
+  await client.waitForElementVisible(".app", 3000);
+  await client.click("#order").pause(1000);
 });
 
 When(/^I pause for (\d+) ms$/, async time => {
@@ -52,4 +70,16 @@ Then(/^I should successfully create a booking$/, async () => {
   //   client.assert.visible(".notif-success-book");
   // this will pass:
   await client.expect.element(".notif-success-book").to.be.visible;
+});
+
+When(/^I enter the appetizer$/, async () => {
+  await client.setValue("#textfield-appetizer", "noms").pause(1000);
+});
+
+When(/^I add a side$/, async () => {
+  await client.clickByText("button", "Add a side");
+});
+
+When(/^I submit the order$/, async () => {
+  await client.clickByText("button", "Order");
 });
