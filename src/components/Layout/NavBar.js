@@ -15,6 +15,9 @@ class NavBar extends React.Component {
         <StyledLink to="/booking" id="booking">
           Context (Single)
         </StyledLink>
+        <StyledLink to="/list" id="list">
+          Lazy Loaded List
+        </StyledLink>
       </StyledNavBar>
     );
   }

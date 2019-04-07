@@ -27,6 +27,18 @@ Given(/^I am on the order page$/, async () => {
   await client.click("#order").pause(1000);
 });
 
+Given(/^I am on the list page$/, async () => {
+  console.log(client.globals.state.sessionId);
+  await client.session(res => {
+    console.log(res.sessionId);
+    client.globals.state.sessionId = res.sessionId;
+  });
+
+  await client.url(client.launch_url);
+  await client.waitForElementVisible(".app", 3000);
+  await client.click("#list").pause(1000);
+});
+
 When(/^I pause for (\d+) ms$/, async time => {
   await client.pause(parseInt(time, 10));
 });
@@ -115,9 +127,11 @@ Then(/^I create a screenshot$/, async () => {
 
     console.log("Set visible size to the height of the dom", height);
 
+    await client.execute(`window.scrollTo(0, ${height});`);
+
     const deviceMetrics = {
-      width: 0,
-      height: 0,
+      width: width,
+      height: height,
       deviceScaleFactor: 0,
       mobile: false,
       fitWindow: false
