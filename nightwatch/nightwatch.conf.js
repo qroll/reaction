@@ -3,6 +3,7 @@ const chromedriver = require("chromedriver");
 module.exports = {
   globals_path: "../nightwatch/global.js",
   custom_commands_path: ["./nightwatch/custom_commands"],
+  output_folder: "./nightwatch/reports/xml",
   test_settings: {
     default: {
       launch_url: "http://localhost:3000",
@@ -17,8 +18,13 @@ module.exports = {
         javascriptEnabled: true,
         acceptSslCerts: true,
         chromeOptions: {
-          args: ["disable-gpu"]
+          args: ["disable-gpu", "--remote-debugging-port=9222"]
         }
+      },
+      screenshots: {
+        enabled: true,
+        path: "./nightwatch/reports/screenshots",
+        on_failure: true
       },
       globals: {
         // abortOnAssertionFailure: false,

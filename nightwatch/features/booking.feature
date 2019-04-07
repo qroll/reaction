@@ -11,6 +11,7 @@ Feature: Booking
     And I enter the end time
     And I submit the booking
     Then I should successfully create a booking
+    And I create a screenshot
 
   Scenario: Create an invalid booking
     Given I am on the booking page

@@ -1,5 +1,7 @@
 const { client } = require("nightwatch-api");
 const { Given, When, Then } = require("cucumber");
+const CDP = require("chrome-remote-interface");
+const fs = require("fs");
 
 Given(/^I am on the booking page$/, async () => {
   console.log(client.globals.state.sessionId);
@@ -70,6 +72,9 @@ Then(/^I should successfully create a booking$/, async () => {
   //   client.assert.visible(".notif-success-book");
   // this will pass:
   await client.expect.element(".notif-success-book").to.be.visible;
+  await client.saveScreenshot(
+    "./nightwatch/reports/screenshots/booking_success.png"
+  );
 });
 
 When(/^I enter the appetizer$/, async () => {
@@ -82,4 +87,52 @@ When(/^I add a side$/, async () => {
 
 When(/^I submit the order$/, async () => {
   await client.clickByText("button", "Order");
+});
+
+Then(/^I create a screenshot$/, async () => {
+  let chrome;
+  try {
+    // connect to endpoint
+    // chrome = await CDP();
+    let tabs = await CDP.List();
+    console.log(">>>> tabs", tabs);
+    let tabId = tabs.find(tab => tab.url.startsWith("http://localhost:3000"))
+      .id;
+    console.log(">>>> tabId", tabId);
+    chrome = await CDP({ target: tabId });
+    const { DOM, Emulation, Page } = chrome;
+    // measure the height of the rendered page
+    const {
+      root: { nodeId: documentNodeId }
+    } = await DOM.getDocument();
+    const { nodeId: bodyNodeId } = await DOM.querySelector({
+      selector: "body",
+      nodeId: documentNodeId
+    });
+    const {
+      model: { height, width }
+    } = await DOM.getBoxModel({ nodeId: bodyNodeId });
+
+    console.log("Set visible size to the height of the dom", height);
+
+    const deviceMetrics = {
+      width: 0,
+      height: 0,
+      deviceScaleFactor: 0,
+      mobile: false,
+      fitWindow: false
+    };
+    await Emulation.setDeviceMetricsOverride(deviceMetrics);
+    // await Emulation.setVisibleSize({ width: width, height: height }); // deprecated
+
+    const { data } = await Page.captureScreenshot();
+    fs.writeFileSync("screenshot.png", Buffer.from(data, "base64"));
+  } catch (err) {
+    console.error(err);
+  } finally {
+    if (chrome) {
+      console.log("Took screenshot");
+      await chrome.close();
+    }
+  }
 });
