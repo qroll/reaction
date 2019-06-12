@@ -43,7 +43,7 @@
   ],
   "devDependencies": {
     "chrome-remote-interface": "^0.27.1",
-    "chromedriver": "^2.45.0",
+    "chromedriver": "^2.46.0",
     "codeceptjs": "^2.0.3",
     "cucumber": "^5.1.0",
     "cucumber-html-reporter": "^4.0.5",
@@ -55,7 +55,7 @@
     "nightwatch-api": "^2.1.0",
     "puppeteer": "^1.11.0",
     "resemblejs": "^3.1.0",
-    "selenium-standalone": "^6.15.4",
+    "selenium-standalone": "^6.16.0",
     "start-server-and-test": "^1.7.11",
     "testcafe": "^0.23.3"
   }
