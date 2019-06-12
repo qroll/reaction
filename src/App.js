@@ -9,6 +9,7 @@ import Main from "src/pages/Main";
 import OrderForm from "src/pages/OrderForm";
 import BookingForm from "src/pages/BookingForm";
 import List from "src/pages/List";
+import ConsentForm from "src/pages/ConsentForm";
 
 let store = configureStore();
 
@@ -22,6 +23,7 @@ class App extends Component {
             <Route path="/order" component={OrderForm} />
             <Route path="/booking" component={BookingForm} />
             <Route path="/list" component={List} />
+            <Route path="/consent" component={ConsentForm} />
           </Layout>
         </Provider>
       </BrowserRouter>

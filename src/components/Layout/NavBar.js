@@ -18,6 +18,9 @@ class NavBar extends React.Component {
         <StyledLink to="/list" id="list">
           Lazy Loaded List
         </StyledLink>
+        <StyledLink to="/consent" id="consent">
+          Consent form
+        </StyledLink>
       </StyledNavBar>
     );
   }

@@ -1,8 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "styled-components";
+import moment from "moment";
 
-import { GRAY, ACCENT } from "src/styles";
+import { WHITE, GRAY, ACCENT } from "src/styles";
+import DatePicker from "./DatePicker";
+
+const StyledWrapper = styled.div`
+  position: relative;
+`;
 
 const StyledInput = styled.input`
   border: 1px solid ${GRAY.LIGHT};
@@ -22,67 +28,62 @@ const StyledInput = styled.input`
   }
 `;
 
-const Error = styled.div`
-  color: red;
-  font-size: 0.8rem;
-`;
-
-class TextInput extends React.Component {
+class DateInput extends React.Component {
   state = {
-    isTouched: false
-  };
-
-  handleInputChange = e => {
-    let value = e.target.value;
-    if (this.props.onChange) {
-      this.props.onChange(this.props.field, value);
-    }
+    isFocused: false
   };
 
   handleFocus = () => {
-    if (!this.state.isTouched) {
-      this.setState({ isTouched: true });
-    }
-    if (this.props.onFocusChange) {
-      this.props.onFocusChange(true);
-    }
+    this.setState({ isFocused: true });
   };
 
   handleBlur = () => {
-    if (this.props.onFocusChange) {
-      this.props.onFocusChange(false);
+    this.setState({ isFocused: false });
+  };
+
+  handleInputChange = e => {
+    // blah
+  };
+
+  handleDateChange = date => {
+    if (this.props.onChange) {
+      this.props.onChange(this.props.field, date);
     }
   };
 
   render() {
-    let { field, value, placeholder, readOnly, errorMessage } = this.props;
+    let { field, value, placeholder, readOnly } = this.props;
+    let { isFocused } = this.state;
+
+    let valueString = moment.isMoment(value) ? value.format("D MMM YYYY") : "";
 
     return (
-      <>
+      <StyledWrapper>
         <StyledInput
           type="text"
           id={`textfield-${Array.isArray(field) ? field.join("-") : field}`}
-          value={value}
+          value={valueString}
           placeholder={placeholder}
           onChange={this.handleInputChange}
           onFocus={this.handleFocus}
           onBlur={this.handleBlur}
           readOnly={readOnly}
         />
-        {errorMessage && <Error>{errorMessage}</Error>}
-      </>
+        <DatePicker
+          isFocused={isFocused}
+          onDateSelect={this.handleDateChange}
+        />
+      </StyledWrapper>
     );
   }
 }
 
-TextInput.propTypes = {
+DateInput.propTypes = {
   field: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
-  value: PropTypes.string,
+  value: PropTypes.instanceOf(moment),
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
-  onFocusChange: PropTypes.func,
-  readOnly: PropTypes.bool,
-  errorMessage: PropTypes.string
+  readOnly: PropTypes.bool
 };
 
-export default TextInput;
+export default DateInput;
