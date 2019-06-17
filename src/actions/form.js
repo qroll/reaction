@@ -1,6 +1,6 @@
 export const postForm = form => {
   return new Promise((resolve, reject) => {
-    setTimeout(resolve, 5000);
+    setTimeout(resolve, 2000);
   });
 };
 

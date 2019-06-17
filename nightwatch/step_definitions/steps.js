@@ -3,6 +3,8 @@ const { Given, When, Then } = require("cucumber");
 const CDP = require("chrome-remote-interface");
 const fs = require("fs");
 
+const screencast = require("./screencast");
+
 Given(/^I am on the booking page$/, async () => {
   console.log(client.globals.state.sessionId);
   await client.session(res => {
@@ -12,7 +14,7 @@ Given(/^I am on the booking page$/, async () => {
 
   await client.url(client.launch_url);
   await client.waitForElementVisible(".app", 3000);
-  await client.click("#booking").pause(1000);
+  await client.click("#booking").pause(500);
 });
 
 Given(/^I am on the order page$/, async () => {
@@ -24,7 +26,7 @@ Given(/^I am on the order page$/, async () => {
 
   await client.url(client.launch_url);
   await client.waitForElementVisible(".app", 3000);
-  await client.click("#order").pause(1000);
+  await client.click("#order").pause(500);
 });
 
 Given(/^I am on the list page$/, async () => {
@@ -36,7 +38,7 @@ Given(/^I am on the list page$/, async () => {
 
   await client.url(client.launch_url);
   await client.waitForElementVisible(".app", 3000);
-  await client.click("#list").pause(1000);
+  await client.click("#list").pause(500);
 });
 
 When(/^I pause for (\d+) ms$/, async time => {
@@ -46,7 +48,7 @@ When(/^I pause for (\d+) ms$/, async time => {
 When(/^I enter the reason$/, async () => {
   let value;
   await client.getValue("#textfield-cupcake", result => (value = result.value));
-  await client.setValue("#textfield-reason", value).pause(1000);
+  await client.setValue("#textfield-reason", value).pause(500);
 });
 
 When(/^I enter the start time$/, async () => {
@@ -62,12 +64,12 @@ When(/^I enter the start time$/, async () => {
 });
 
 When(/^I enter the end time$/, async () => {
-  await client.click("#select-endTime-date").pause(1000);
+  await client.click("#select-endTime-date").pause(500);
   await client
     .click("#select-endTime-date .dropdown-item:nth-child(2)")
     .pause(500);
 
-  await client.click("#select-endTime-time").pause(1000);
+  await client.click("#select-endTime-time").pause(500);
   await client
     .click("#select-endTime-time .dropdown-item:nth-child(3)")
     .pause(500);
@@ -90,7 +92,7 @@ Then(/^I should successfully create a booking$/, async () => {
 });
 
 When(/^I enter the appetizer$/, async () => {
-  await client.setValue("#textfield-appetizer", "noms").pause(1000);
+  await client.setValue("#textfield-appetizer", "noms").pause(500);
 });
 
 When(/^I add a side$/, async () => {
@@ -151,54 +153,17 @@ Then(/^I create a screenshot$/, async () => {
   }
 });
 
-let recording = true;
-let chrome;
-const PQueue = require("p-queue").default;
-const queue = new PQueue({ concurrency: 1 });
+const fork = require("child_process").fork;
+let child;
 
 When(/^I start a recording$/, async () => {
-  try {
-    let tabs = await CDP.List();
-    // console.log(">>>> tabs", tabs);
-    let tabId = tabs.find(tab => tab.url.startsWith("http://localhost:3000"))
-      .id;
-    // console.log(">>>> tabId", tabId);
-    chrome = await CDP({ target: tabId });
-    const { Page } = chrome;
-    await Page.enable();
-    await Page.startScreencast({ format: "png", everyNthFrame: 5 });
-
-    let globalCounter = 0;
-
-    const takeRecording = counter => {
-      console.log(">>> recording " + counter);
-      queue.add(async () => {
-        const { data, metadata, sessionId } = await Page.screencastFrame();
-        // console.log(metadata, data);
-        fs.writeFileSync(
-          `./nightwatch/reports/screenshots/record${counter}.png`,
-          Buffer.from(data, "base64")
-        );
-        await Page.screencastFrameAck({ sessionId: sessionId });
-      });
-      globalCounter++;
-      if (recording) setTimeout(() => takeRecording(globalCounter), 0);
-    };
-
-    new Promise(async resolve => {
-      setTimeout(() => takeRecording(globalCounter), 0);
-      resolve();
-    });
-  } catch (err) {
-    console.error(err);
-  }
+  child = fork(__dirname + "/screencast");
+  child.send({
+    type: "start",
+    args: { options: { url: "http://localhost:3000" } }
+  });
 });
 
 Then(/^I end a recording$/, async () => {
-  recording = false;
-  await queue.onEmpty();
-  if (chrome) {
-    console.log("Took recording");
-    await chrome.close();
-  }
+  child.send({ type: "stop" });
 });

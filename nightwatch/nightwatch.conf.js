@@ -18,7 +18,11 @@ module.exports = {
         javascriptEnabled: true,
         acceptSslCerts: true,
         chromeOptions: {
-          args: ["disable-gpu", "--remote-debugging-port=9222"]
+          args: [
+            "disable-gpu",
+            "--remote-debugging-port=9222",
+            "--window-size=1280,720"
+          ]
         }
       },
       screenshots: {
