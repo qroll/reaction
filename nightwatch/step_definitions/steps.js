@@ -150,3 +150,55 @@ Then(/^I create a screenshot$/, async () => {
     }
   }
 });
+
+let recording = true;
+let chrome;
+const PQueue = require("p-queue").default;
+const queue = new PQueue({ concurrency: 1 });
+
+When(/^I start a recording$/, async () => {
+  try {
+    let tabs = await CDP.List();
+    // console.log(">>>> tabs", tabs);
+    let tabId = tabs.find(tab => tab.url.startsWith("http://localhost:3000"))
+      .id;
+    // console.log(">>>> tabId", tabId);
+    chrome = await CDP({ target: tabId });
+    const { Page } = chrome;
+    await Page.enable();
+    await Page.startScreencast({ format: "png", everyNthFrame: 5 });
+
+    let globalCounter = 0;
+
+    const takeRecording = counter => {
+      console.log(">>> recording " + counter);
+      queue.add(async () => {
+        const { data, metadata, sessionId } = await Page.screencastFrame();
+        // console.log(metadata, data);
+        fs.writeFileSync(
+          `./nightwatch/reports/screenshots/record${counter}.png`,
+          Buffer.from(data, "base64")
+        );
+        await Page.screencastFrameAck({ sessionId: sessionId });
+      });
+      globalCounter++;
+      if (recording) setTimeout(() => takeRecording(globalCounter), 0);
+    };
+
+    new Promise(async resolve => {
+      setTimeout(() => takeRecording(globalCounter), 0);
+      resolve();
+    });
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+Then(/^I end a recording$/, async () => {
+  recording = false;
+  await queue.onEmpty();
+  if (chrome) {
+    console.log("Took recording");
+    await chrome.close();
+  }
+});
