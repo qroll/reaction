@@ -98,6 +98,7 @@ const start = async args => {
     recording = true;
     try {
       fs.mkdirSync(path.resolve(__dirname, "img"));
+      fs.mkdirSync(path.resolve(__dirname, "../reports/gif"));
     } catch (err) {
       if (err.code === "EEXIST") {
         console.log("♫♫♫ file already exists");
@@ -131,7 +132,12 @@ const makeGif = () =>
     console.log("♫♫♫ dimensions", width, height);
 
     const encoder = new GIFEncoder(width, height);
-    const file = require("fs").createWriteStream("./screen.gif");
+    const file = require("fs").createWriteStream(
+      path.resolve(
+        __dirname,
+        `../reports/gif/screen-${new Date().valueOf()}.gif`
+      )
+    );
 
     encoder.setFrameRate(60);
     encoder.pipe(file);

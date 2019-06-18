@@ -21,7 +21,8 @@ module.exports = {
           args: [
             "disable-gpu",
             "--remote-debugging-port=9222",
-            "--window-size=1280,720"
+            "--window-size=1280,720",
+            "--headless"
           ]
         }
       },
