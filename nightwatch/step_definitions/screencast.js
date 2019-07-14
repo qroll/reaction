@@ -12,6 +12,8 @@ let width = 1280,
 const PQueue = require("p-queue").default;
 const queue = new PQueue({ concurrency: 3 });
 
+const ffmpeg = require("fluent-ffmpeg");
+
 const startChrome = async options => {
   console.log("♫♫♫ start chrome");
   const { url } = options;
@@ -57,7 +59,7 @@ const stopChrome = async () => {
   }
 };
 
-const _screencast = currentCounter => {
+const screencast = currentCounter => {
   const getFrame = async () => {
     const { data, metadata, sessionId } = await currentPage.screencastFrame();
     // console.log(metadata, data);
@@ -65,12 +67,12 @@ const _screencast = currentCounter => {
 
     await new Promise((resolve, reject) =>
       fs.writeFile(
-        path.resolve(__dirname, "img", `record${currentCounter}.png`),
+        path.resolve(__dirname, "img", `record${currentCounter}.jpg`),
         Buffer.from(data, "base64"),
         err => (err ? reject() : resolve())
       )
     );
-    images.push(path.resolve(__dirname, "img", `record${currentCounter}.png`));
+    images.push(path.resolve(__dirname, "img", `record${currentCounter}.jpg`));
     // images.push(Buffer.from(data, "base64"));
   };
 
@@ -82,14 +84,15 @@ const _screencast = currentCounter => {
   );
 };
 
-const throttle = require("lodash/throttle");
-const screencast = throttle(_screencast, 300);
+// const throttle = require("lodash/throttle");
+// const screencast = throttle(_screencast, 300);
 
 const takeRecording = currentCounter => {
   console.log(">>> recording " + currentCounter);
   screencast(currentCounter);
   counter++;
-  if (recording) setTimeout(() => takeRecording(counter), 100);
+  // if (recording) setTimeout(() => takeRecording(counter), 100);
+  if (recording) setTimeout(() => takeRecording(currentCounter + 1), 100);
 };
 
 const start = async args => {
@@ -161,6 +164,22 @@ const makeGif = () =>
     encoder.finish();
   });
 
+const makeVideo = async () =>
+  new Promise((resolve, reject) => {
+    let command = ffmpeg()
+      .input(path.resolve(__dirname, `./img/record%d.jpg`))
+      .output("outputfile.mp4")
+      .on("error", function(err) {
+        console.log("An error occurred: " + err.message);
+        reject(err);
+      })
+      .on("end", function() {
+        console.log("Processing finished !");
+        resolve();
+      })
+      .run();
+  });
+
 const stop = async args => {
   try {
     recording = false;
@@ -170,6 +189,7 @@ const stop = async args => {
     queue.clear();
 
     await makeGif();
+    await makeVideo();
 
     await stopChrome();
   } catch (err) {
