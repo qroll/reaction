@@ -10,6 +10,7 @@ import OrderForm from "src/pages/OrderForm";
 import BookingForm from "src/pages/BookingForm";
 import List from "src/pages/List";
 import ConsentForm from "src/pages/ConsentForm";
+import Typography from "src/pages/Typography";
 
 let store = configureStore();
 
@@ -24,6 +25,7 @@ class App extends Component {
             <Route path="/booking" component={BookingForm} />
             <Route path="/list" component={List} />
             <Route path="/consent" component={ConsentForm} />
+            <Route path="/typo" component={Typography} />
           </Layout>
         </Provider>
       </BrowserRouter>

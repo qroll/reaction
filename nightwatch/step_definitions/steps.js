@@ -39,6 +39,12 @@ Given(/^I am on the list page$/, async () => {
   await client.click("#list").pause(1000);
 });
 
+Given(/^I am on the typography page$/, async () => {
+  await client.url(client.launch_url);
+  await client.waitForElementVisible(".app", 3000);
+  await client.click("#typo").pause(1000);
+});
+
 When(/^I pause for (\d+) ms$/, async time => {
   await client.pause(parseInt(time, 10));
 });
@@ -149,4 +155,15 @@ Then(/^I create a screenshot$/, async () => {
       await chrome.close();
     }
   }
+});
+
+Then(/^I see text in capitalize case$/, async () => {
+  await client.expect
+    .element("#capitalize")
+    .text.to.equal("This Is upper case");
+  // .text.to.equal("This Is Upper Case");
+});
+
+Then(/^I see text in lower case$/, async () => {
+  await client.expect.element("#lower").text.to.equal("this is lower case");
 });

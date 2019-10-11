@@ -21,6 +21,9 @@ class NavBar extends React.Component {
         <StyledLink to="/consent" id="consent">
           Consent form
         </StyledLink>
+        <StyledLink to="/typo" id="typo">
+          Typography
+        </StyledLink>
       </StyledNavBar>
     );
   }
