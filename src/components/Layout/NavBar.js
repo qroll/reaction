@@ -24,6 +24,15 @@ class NavBar extends React.Component {
         <StyledLink to="/typo" id="typo">
           Typography
         </StyledLink>
+        <StyledLink to="/grid" id="grid">
+          Grids
+        </StyledLink>
+        <StyledLink to="/pagination" id="pagination">
+          Pagination
+        </StyledLink>
+        <StyledLink to="/modal" id="modal">
+          Modal
+        </StyledLink>
       </StyledNavBar>
     );
   }

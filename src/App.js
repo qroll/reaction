@@ -11,6 +11,9 @@ import BookingForm from "src/pages/BookingForm";
 import List from "src/pages/List";
 import ConsentForm from "src/pages/ConsentForm";
 import Typography from "src/pages/Typography";
+import Grid from "src/pages/Grid";
+import Pagination from "src/pages/Pagination";
+import Modal from "src/pages/Modal";
 
 let store = configureStore();
 
@@ -26,6 +29,9 @@ class App extends Component {
             <Route path="/list" component={List} />
             <Route path="/consent" component={ConsentForm} />
             <Route path="/typo" component={Typography} />
+            <Route path="/grid" component={Grid} />
+            <Route path="/pagination" component={Pagination} />
+            <Route path="/modal" component={Modal} />
           </Layout>
         </Provider>
       </BrowserRouter>
