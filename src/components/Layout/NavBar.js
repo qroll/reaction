@@ -33,6 +33,9 @@ class NavBar extends React.Component {
         <StyledLink to="/modal" id="modal">
           Modal
         </StyledLink>
+        <StyledLink to="/request" id="request">
+          Request
+        </StyledLink>
       </StyledNavBar>
     );
   }

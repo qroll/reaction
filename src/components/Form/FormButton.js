@@ -20,9 +20,14 @@ const Button = styled.button`
 `;
 
 const FormButton = props => {
-  let { label, onClick, id } = props;
+  let { label, onClick, id, disabled, ...remainingProps } = props;
   return (
-    <Button id={`button-${id}`} onClick={onClick}>
+    <Button
+      id={`button-${id}`}
+      onClick={onClick}
+      disabled={disabled}
+      {...remainingProps}
+    >
       {label}
     </Button>
   );

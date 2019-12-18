@@ -3,6 +3,7 @@ const chromedriver = require("chromedriver");
 module.exports = {
   globals_path: "../nightwatch/global.js",
   custom_commands_path: ["./nightwatch/custom_commands"],
+  page_objects_path: "./nightwatch/pages",
   output_folder: "./nightwatch/reports/xml",
   test_settings: {
     default: {

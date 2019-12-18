@@ -14,6 +14,7 @@ import Typography from "src/pages/Typography";
 import Grid from "src/pages/Grid";
 import Pagination from "src/pages/Pagination";
 import Modal from "src/pages/Modal";
+import Request from "src/pages/Request";
 
 let store = configureStore();
 
@@ -32,6 +33,7 @@ class App extends Component {
             <Route path="/grid" component={Grid} />
             <Route path="/pagination" component={Pagination} />
             <Route path="/modal" component={Modal} />
+            <Route path="/request" component={Request} />
           </Layout>
         </Provider>
       </BrowserRouter>

@@ -3,16 +3,19 @@ const { Given, When, Then } = require("cucumber");
 const CDP = require("chrome-remote-interface");
 const fs = require("fs");
 
-Given(/^I am on the booking page$/, async () => {
-  console.log(client.globals.state.sessionId);
-  await client.session(res => {
-    console.log(res.sessionId);
-    client.globals.state.sessionId = res.sessionId;
-  });
+Given(/^I am on the (.+) page$/, async pageName => {
+  // console.log(client.globals.state.sessionId);
+  // await client.session(res => {
+  //   console.log(res.sessionId);
+  //   client.globals.state.sessionId = res.sessionId;
+  // });
 
   await client.url(client.launch_url);
-  await client.waitForElementVisible(".app", 3000);
-  await client.click("#booking").pause(1000);
+  // await client.waitForElementVisible(".app", 3000);
+  // await client.click("#booking").pause(1000);
+
+  const page = client.page[pageName]();
+  await page.click("@link").pause(1000);
 });
 
 Given(/^I am on the order page$/, async () => {
@@ -45,7 +48,14 @@ Given(/^I am on the typography page$/, async () => {
   await client.click("#typo").pause(1000);
 });
 
-When(/^I pause for (\d+) ms$/, async time => {
+Given(/^I am on the request page$/, async () => {
+  await client.url(client.launch_url);
+  await client.waitForElementVisible(".app", 3000);
+  await client.click("#request").pause(1000);
+});
+
+When("I pause for {int} ms", async time => {
+  console.log(">> what is type of time", typeof time, time);
   await client.pause(parseInt(time, 10));
 });
 
@@ -77,6 +87,10 @@ When(/^I enter the end time$/, async () => {
   await client
     .click("#select-endTime-time .dropdown-item:nth-child(3)")
     .pause(500);
+});
+
+Then("booking button should be disabled", async () => {
+  await client.expect.element("#button-book").to.have.attribute("disabled");
 });
 
 When(/^I submit the booking$/, async () => {
@@ -166,4 +180,79 @@ Then(/^I see text in capitalize case$/, async () => {
 
 Then(/^I see text in lower case$/, async () => {
   await client.expect.element("#lower").text.to.equal("this is lower case");
+});
+
+class Deferred {
+  constructor() {
+    this.promise = new Promise((resolve, reject) => {
+      this.reject = reject;
+      this.resolve = resolve;
+    });
+  }
+}
+
+// class NetworkThingy {
+//   constructor() {
+//     const client = await CDP();
+//     const { Network } = client;
+
+//     this.reqIdToReq = {
+//       // [requestId]: {status: 'pending/finished', ...}
+//     };
+
+//     this.reqToId = {
+//       // [reqUrl]: reqId
+//     };
+
+//     this.deferred = {
+//       // [reqId]: deferred
+//     };
+
+//     Network.loadingFinished(params => {
+//       console.log("Received params for loadingFinished", params);
+//       const reqId = params.requestId;
+//       const url = reqIdToReq[reqId];
+//       this.deferred[url].resolve();
+//     });
+//   }
+
+//   waitForRequest(url) {
+//     if (this.reqToId[url].status === "finished") {
+//       return Promise.resolve();
+//     }
+
+//     this.deferred[url] = new Deferred();
+//     return this.deferred[url];
+//   }
+// }
+
+Then(/^I track network requests$/, async () => {
+  const client = await CDP();
+  const { Network } = client;
+
+  await Network.requestWillBeSent(params => {
+    console.log("Received params for requestWillBeSent", params);
+  });
+
+  await Network.enable();
+});
+
+Then(/^I wait for network requsts to complete$/, async () => {
+  const client = await CDP();
+  const { Network } = client;
+  const deferredPromise = new Deferred();
+
+  await Network.requestWillBeSent(params => {
+    console.log("Received params for requestWillBeSent", params);
+    // deferredPromise.resolve();
+  });
+
+  await Network.loadingFinished(params => {
+    console.log("Received params for loadingFinished", params);
+    deferredPromise.resolve();
+  });
+
+  await Network.enable();
+  await deferredPromise.promise;
+  await client.close();
 });

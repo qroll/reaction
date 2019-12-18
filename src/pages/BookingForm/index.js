@@ -18,6 +18,10 @@ const Form = styled.div`
 `;
 
 class BookingForm extends Component {
+  componentDidMount() {
+    setTimeout(() => this.setState({ buttonDisabled: true }), 8000);
+  }
+
   handleOnFormChange = (field, value) => {
     field = Array.isArray(field) ? field : [field];
     let nextState = setIn(this.state, ["form", "values", ...field], value);
@@ -73,7 +77,13 @@ class BookingForm extends Component {
             <Input field="cupcake" />
             <DateTime field={["startTime"]} />
             <DateTime field={["endTime"]} />
-            <FormButton id="book" label="Book" onClick={this.handleOnSubmit} />
+            <FormButton
+              id="book"
+              label="Book"
+              onClick={this.handleOnSubmit}
+              disabled={this.state.buttonDisabled}
+              style={{ display: this.state.buttonDisabled ? "block" : "none" }}
+            />
           </Form>
         </BookingContext.Provider>
         <Code>{JSON.stringify(this.state, null, 2)}</Code>
