@@ -24,4 +24,5 @@ yarn-error.log*
 
 # e2e reports
 nightwatch/reports
+seleniumGrid/report
 chromedriver.log

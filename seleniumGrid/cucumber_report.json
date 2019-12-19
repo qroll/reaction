@@ -1,0 +1,223 @@
+[
+  {
+    "keyword": "Feature",
+    "name": "A",
+    "line": 2,
+    "id": "a",
+    "tags": [
+      {
+        "name": "@A",
+        "line": 1
+      }
+    ],
+    "uri": "seleniumGrid/features/A.feature",
+    "elements": [
+      {
+        "id": "a;visit-a-web-page",
+        "keyword": "Scenario",
+        "line": 4,
+        "name": "Visit a web page",
+        "tags": [
+          {
+            "name": "@A",
+            "line": 1
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "seleniumGrid/setup.js:25"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2104000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 5,
+            "name": "I visit 'https://google.com'",
+            "match": {
+              "location": "seleniumGrid/step_definitions/steps.js:5"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2168000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 6,
+            "name": "I see '#hplogo'",
+            "match": {
+              "location": "seleniumGrid/step_definitions/steps.js:16"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 46000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 7,
+            "name": "I pause for 5 seconds",
+            "match": {
+              "location": "seleniumGrid/step_definitions/steps.js:20"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 7000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 8,
+            "name": "I visit 'https://www.bing.com/'",
+            "match": {
+              "location": "seleniumGrid/step_definitions/steps.js:5"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1879000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 9,
+            "name": "I see '.hp_sw_logo'",
+            "match": {
+              "location": "seleniumGrid/step_definitions/steps.js:16"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 47000000
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "seleniumGrid/setup.js:32"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 75000000
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "keyword": "Feature",
+    "name": "B",
+    "line": 2,
+    "id": "b",
+    "tags": [
+      {
+        "name": "@B",
+        "line": 1
+      }
+    ],
+    "uri": "seleniumGrid/features/B.feature",
+    "elements": [
+      {
+        "id": "b;visit-a-web-page",
+        "keyword": "Scenario",
+        "line": 4,
+        "name": "Visit a web page",
+        "tags": [
+          {
+            "name": "@B",
+            "line": 1
+          }
+        ],
+        "type": "scenario",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "match": {
+              "location": "seleniumGrid/setup.js:25"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1891000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 5,
+            "name": "I visit 'https://www.bing.com/'",
+            "match": {
+              "location": "seleniumGrid/step_definitions/steps.js:5"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1113000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 6,
+            "name": "I see '.hp_sw_logo'",
+            "match": {
+              "location": "seleniumGrid/step_definitions/steps.js:16"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 123000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 7,
+            "name": "I visit 'https://google.com'",
+            "match": {
+              "location": "seleniumGrid/step_definitions/steps.js:5"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1636000000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 8,
+            "name": "I see '#hplogo'",
+            "match": {
+              "location": "seleniumGrid/step_definitions/steps.js:16"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 39000000
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "match": {
+              "location": "seleniumGrid/setup.js:32"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 113000000
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
